@@ -1,1 +1,2 @@
 # Android_Cpu_Monitor
+目前可以监听CPU温度和CPU负载/占用率
