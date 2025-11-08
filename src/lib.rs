@@ -10,7 +10,7 @@ pub struct Load{
 }
 
 impl Load {
-    pub async fn new() -> Self {
+    pub fn new() -> Self {
         let stat_file = File::open("/proc/stat").unwrap();
         let stat_file = BufReader::new(stat_file);
         Self {
@@ -20,7 +20,7 @@ impl Load {
         }
     }
 
-    pub async fn update(&mut self) -> u32 {
+    pub fn update(&mut self) -> u32 {
         self.stat_file.seek(std::io::SeekFrom::Start(0)).unwrap();
         let mut buffer = [0u8; 1024];
         let bytes_read = self.stat_file.read(&mut buffer).unwrap();
