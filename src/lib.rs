@@ -20,7 +20,7 @@ impl Load {
         }
     }
 
-    pub fn update(&mut self) -> u32 {
+    pub fn get_load(&mut self) -> u32 {
         self.stat_file.seek(std::io::SeekFrom::Start(0)).unwrap();
         let mut buffer = [0u8; 1024];
         let bytes_read = self.stat_file.read(&mut buffer).unwrap();
@@ -56,6 +56,7 @@ impl Thermal {
             let path = entry.path();
             if path.is_dir() {
                 let path = path;
+                //由于我使用starts_with方法无法进入，所以选了display+to_string+contains，因为只执行一次，所以不会有性能损失。
                 if path.display().to_string().contains("thermal_zone") {
                     let type_path = path.join("type");
                     if let Ok(type_str) = read_to_string(&type_path) {
@@ -77,7 +78,7 @@ impl Thermal {
         panic!("没有找到对的温度文件");
     }
 
-    pub fn update(&mut self) -> u32 {
+    pub fn get_thermal(&mut self) -> u32 {
         self.thermal_file.seek(std::io::SeekFrom::Start(0)).unwrap();
         let mut temp_line = String::new();
         self.thermal_file.read_to_string(&mut temp_line).unwrap();
