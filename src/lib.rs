@@ -50,15 +50,16 @@ pub struct Thermal {
 impl Thermal {
     pub fn new() -> Self {
         let thermal_file = PathBuf::from("/sys/class/thermal");
-        let alldir = thermal_file.read_dir().unwrap();
-        for entry in alldir {
+        let all_dir = thermal_file.read_dir().unwrap();
+        for entry in all_dir {
             let entry = entry.unwrap();
             let path = entry.path();
             if path.is_dir() {
                 let path = path;
-                if path.starts_with("thermal_zone") {
+                if path.display().to_string().contains("thermal_zone") {
                     let type_path = path.join("type");
                     if let Ok(type_str) = read_to_string(&type_path) {
+                        println!("{}", type_str);
                         if type_str.contains("mtktscpu") 
                         || type_str.contains("soc_max")
                         || type_str.contains("cpu-1-") {
