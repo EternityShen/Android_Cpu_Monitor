@@ -3,5 +3,5 @@
 version = 4
 
 [[package]]
-name = "cpu_monitor"
+name = "android_cpu_monitor"
 version = "0.1.0"
